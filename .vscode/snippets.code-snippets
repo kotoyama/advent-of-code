@@ -1,0 +1,27 @@
+{
+  "NewDayTypeScript": {
+    "scope": "typescript",
+    "prefix": "newday",
+    "body": [
+      "import * as chalk from 'chalk'",
+      "",
+      "import { readTextFile } from '../../lib'",
+      "",
+      "const data = readTextFile(__dirname + '/input.txt')",
+      "",
+      "const getPart1 = () => {}",
+      "",
+      "const getPart2 = () => {}",
+      "",
+      "function main() {",
+      "  const part1 = getPart1()",
+      "  const part2 = getPart2()",
+      "  console.log(`$1 Day [Part 1]: ${chalk.yellow(part1)}`)",
+      "  console.log(`$1 Day [Part 2]: ${chalk.yellow(part2)}`)",
+      "}",
+      "",
+      "main()"
+    ],
+    "description": "Create new day"
+  }
+}
