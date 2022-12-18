@@ -4,7 +4,7 @@ import { chunk, readTextFile } from '../../lib'
 
 const data = readTextFile(__dirname + '/input.txt')
 
-const content = data.split('\n')
+export const getContent = (data: string) => data.split('\n')
 
 const createAlphabet = (capitalize: boolean) =>
   [...Array(26)].map((_, i) => String.fromCharCode(i + (capitalize ? 65 : 97)))
@@ -55,7 +55,7 @@ const getCommonItemInGroup = (group: Group) => {
   }
 }
 
-const getPart1 = () => {
+export const getPart1 = (content: string[]) => {
   return content.reduce((acc, curr) => {
     const compartments = getCompartments(curr)
     const common = getCommonItemInRucksack(compartments)
@@ -64,7 +64,7 @@ const getPart1 = () => {
   }, 0)
 }
 
-const getPart2 = () => {
+export const getPart2 = (content: string[]) => {
   const chunks = chunk(content, 3) as Group[]
   return chunks.reduce((acc, curr) => {
     const common = getCommonItemInGroup(curr)
@@ -74,10 +74,11 @@ const getPart2 = () => {
 }
 
 function main() {
-  const part1 = getPart1()
-  const part2 = getPart2()
-  console.log(`03 Day [Part 1]: ${chalk.yellow(part1)}`)
-  console.log(`03 Day [Part 2]: ${chalk.yellow(part2)}`)
+  const content = getContent(data)
+  const part1 = getPart1(content)
+  const part2 = getPart2(content)
+  console.log(`Day 03 [Part 1]: ${chalk.yellow(part1)}`)
+  console.log(`Day 03 [Part 2]: ${chalk.yellow(part2)}`)
 }
 
 main()

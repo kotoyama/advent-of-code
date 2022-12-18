@@ -10,7 +10,7 @@ enum Opponent {
   Scissors = 'C',
 }
 
-enum Me {
+export enum Me {
   Rock = 'X',
   Paper = 'Y',
   Scissors = 'Z',
@@ -27,11 +27,13 @@ enum RoundScore {
   Draw = 3,
 }
 
-type RoundInput<T extends string> = `${Opponent} ${T}`
+export type RoundInput<T extends string> = `${Opponent} ${T}`
 type Round<T> = [Opponent, T]
 
 const getRound = <T extends string>(input: RoundInput<T>) =>
   input.split(' ') as Round<T>
+
+export const getRounds = (data: string) => data.split('\n')
 
 const isRoundDraw = (round: Round<Me>) => {
   const [opponent, me] = round
@@ -88,8 +90,7 @@ const getScore = (round: Round<Me>) => {
   return roundScore + shapeScore
 }
 
-const getPart1 = () => {
-  const rounds = data.split('\n') as RoundInput<Me>[]
+export const getPart1 = (rounds: RoundInput<Me>[]) => {
   return rounds.reduce((acc, curr) => {
     const round = getRound<Me>(curr)
     const score = getScore(round)
@@ -97,7 +98,7 @@ const getPart1 = () => {
   }, 0)
 }
 
-enum Result {
+export enum Result {
   Loss = 'X',
   Draw = 'Y',
   Win = 'Z',
@@ -149,8 +150,7 @@ const getShape = (round: Round<Result>) => {
   }
 }
 
-const getPart2 = () => {
-  const rounds = data.split('\n') as RoundInput<Result>[]
+export const getPart2 = (rounds: RoundInput<Result>[]) => {
   return rounds.reduce((acc, curr) => {
     const round = getRound<Result>(curr)
     const me = getShape(round)
@@ -161,10 +161,11 @@ const getPart2 = () => {
 }
 
 function main() {
-  const part1 = getPart1()
-  const part2 = getPart2()
-  console.log(`02 Day [Part 1]: ${chalk.yellow(part1)}`)
-  console.log(`02 Day [Part 2]: ${chalk.yellow(part2)}`)
+  const rounds = getRounds(data)
+  const part1 = getPart1(rounds as RoundInput<Me>[])
+  const part2 = getPart2(rounds as RoundInput<Result>[])
+  console.log(`Day 02 [Part 1]: ${chalk.yellow(part1)}`)
+  console.log(`Day 02 [Part 2]: ${chalk.yellow(part2)}`)
 }
 
 main()

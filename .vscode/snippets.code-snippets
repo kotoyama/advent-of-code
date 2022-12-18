@@ -9,19 +9,40 @@
       "",
       "const data = readTextFile(__dirname + '/input.txt')",
       "",
-      "const getPart1 = () => {}",
+      "export const getPart1 = (data: any) => {}",
       "",
-      "const getPart2 = () => {}",
+      "export const getPart2 = (data: any) => {}",
       "",
       "function main() {",
-      "  const part1 = getPart1()",
-      "  const part2 = getPart2()",
-      "  console.log(`$1 Day [Part 1]: ${chalk.yellow(part1)}`)",
-      "  console.log(`$1 Day [Part 2]: ${chalk.yellow(part2)}`)",
+      "  const part1 = getPart1(data)",
+      "  const part2 = getPart2(data)",
+      "  console.log(`Day $1 [Part 1]: ${chalk.yellow(part1)}`)",
+      "  console.log(`Day $1 [Part 2]: ${chalk.yellow(part2)}`)",
       "}",
       "",
       "main()"
     ],
     "description": "Create new day"
+  },
+  "NewDayTestTypeScript": {
+    "scope": "typescript",
+    "prefix": "newdaytest",
+    "body": [
+      "import { describe, expect, it } from 'vitest'",
+      "",
+      "import { readTextFile } from '../../lib'",
+      "import { getPart1, getPart2 } from './index'",
+      "",
+      "describe('Day $1', () => {",
+      "  it('should return correct result for test data', () => {",
+      "    const data = readTextFile(__dirname + '/test.txt')",
+      "  })",
+      "",
+      "  it('should return correct result for input data', () => {",
+      "    const data = readTextFile(__dirname + '/input.txt')",
+      "  })",
+      "})"
+    ],
+    "description": "Create new day test"
   }
 }

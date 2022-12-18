@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "init:day": "scripts/init.sh",
-    "run:day": "scripts/run.sh"
+    "run:day": "scripts/run.sh",
+    "test": "vitest"
   },
   "keywords": [],
   "author": "kotoyama",
@@ -14,6 +15,7 @@
     "@types/node": "^18.11.13",
     "chalk": "^4.1.2",
     "prettier": "^2.8.1",
-    "typescript": "^4.9.4"
+    "typescript": "^4.9.4",
+    "vitest": "^0.25.8"
   }
 }
