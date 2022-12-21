@@ -9,8 +9,10 @@ describe('Day 01', () => {
     const chunks = getChunks(data)
 
     const part1 = getPart1(chunks)
+    const part2 = getPart2(chunks)
 
     expect(part1).eq(24000)
+    expect(part2).eq(45000)
   })
 
   it('should return correct result for input data', () => {

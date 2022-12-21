@@ -10,8 +10,10 @@ describe('Day 02', () => {
     const rounds = getRounds(data)
 
     const part1 = getPart1(rounds as RoundInput<Me>[])
+    const part2 = getPart2(rounds as RoundInput<Result>[])
 
     expect(part1).eq(15)
+    expect(part2).eq(12)
   })
 
   it('should return correct result for input data', () => {
