@@ -1,8 +1,12 @@
 export abstract class Collection<T> {
-  protected storage: T[] = []
+  protected _storage: T[] = []
 
-  size() {
-    return this.storage.length
+  get size() {
+    return this._storage.length
+  }
+
+  get isEmpty() {
+    return this._storage.length === 0
   }
 
   abstract isFull(): boolean

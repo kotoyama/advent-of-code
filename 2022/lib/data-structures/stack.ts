@@ -4,10 +4,12 @@ export interface IStack<T> {
   push(item: T): void
   pop(): T | undefined
   peek(): T | undefined
+  size: number
+  isEmpty: boolean
 }
 
 export class Stack<T> extends Collection<T> implements IStack<T> {
-  constructor(private capacity: number = Infinity) {
+  constructor(private capacity = Infinity) {
     super()
   }
 
@@ -16,26 +18,26 @@ export class Stack<T> extends Collection<T> implements IStack<T> {
    */
   push(item: T) {
     if (this.isFull()) {
-      throw Error('Stack has reached max capacity.')
+      throw Error('Stack has reached max capacity')
     }
-    this.storage.push(item)
+    this._storage.push(item)
   }
 
   /**
    * @returns the last added item and removes it from the stack
    */
   pop() {
-    return this.storage.pop()
+    return this._storage.pop()
   }
 
   /**
    * @returns the last added item without removing it from the stack
    */
   peek() {
-    return this.storage[this.size() - 1]
+    return this._storage[this.size - 1]
   }
 
   isFull() {
-    return this.capacity === this.size()
+    return this.capacity === this.size
   }
 }
