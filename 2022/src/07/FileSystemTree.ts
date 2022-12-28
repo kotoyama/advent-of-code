@@ -20,12 +20,16 @@ export interface IFileSystemTree extends ITree<FileSystemNode> {
     file: FileNode,
     parent: TreeNode<FileSystemNode>,
   ): TreeNode<FileSystemNode>
-  findDirectory(
+  findDirectoryChild(
     dir: string,
     ...children: TreeNode<FileSystemNode>[]
   ): TreeNode<FileSystemNode>
-  sumDirectoriesUnder(limit: number): number
+  sumDirectorySizesUnder(limit: number): number
+  findDirectorySizeForDeletion(): number
 }
+
+const TOTAL_DISK_SPACE_AVAILABLE = 70_000_000
+const DISK_SPACE_NEEDED_FOR_UPDATE = 30_000_000
 
 export class FileSystemTree
   extends Tree<FileSystemNode>
@@ -48,7 +52,7 @@ export class FileSystemTree
     }
   }
 
-  findDirectory(dir: string, ...children: TreeNode<FileSystemNode>[]) {
+  findDirectoryChild(dir: string, ...children: TreeNode<FileSystemNode>[]) {
     if (!this.root) return null
 
     const queue = new Queue<TreeNode<FileSystemNode>>()
@@ -56,7 +60,7 @@ export class FileSystemTree
 
     while (!queue.isEmpty) {
       const node = queue.dequeue()
-      if (node && node.data.name === dir && node.data.type === 'directory') {
+      if (node && node.data.type === 'directory' && node.data.name === dir) {
         return node
       }
       node.children.forEach((child) => queue.enqueue(child))
@@ -65,7 +69,7 @@ export class FileSystemTree
     return null
   }
 
-  sumDirectoriesUnder(limit: number) {
+  sumDirectorySizesUnder(limit: number) {
     if (!this.root) return 0
 
     let sum = 0
@@ -81,5 +85,32 @@ export class FileSystemTree
       node.children.forEach((child) => queue.enqueue(child))
     }
     return sum
+  }
+
+  findDirectorySizeForDeletion() {
+    if (!this.root) return 0
+
+    const REMAINING_SPACE_REQUIRED =
+      DISK_SPACE_NEEDED_FOR_UPDATE -
+      (TOTAL_DISK_SPACE_AVAILABLE - this.root.data.size)
+
+    const queue = new Queue<TreeNode<FileSystemNode>>()
+    queue.enqueue(this.root)
+
+    let min = TOTAL_DISK_SPACE_AVAILABLE
+
+    while (!queue.isEmpty) {
+      const node = queue.dequeue()
+      if (
+        node &&
+        node.data.type === 'directory' &&
+        node.data.size >= REMAINING_SPACE_REQUIRED
+      ) {
+        min = Math.min(node.data.size, min)
+      }
+      node.children.forEach((child) => queue.enqueue(child))
+    }
+
+    return min
   }
 }

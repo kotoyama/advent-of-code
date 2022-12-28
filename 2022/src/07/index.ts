@@ -10,8 +10,7 @@ import {
 
 const data = readTextFile(__dirname + '/input.txt')
 
-export const getLines = (data: string) =>
-  data.split('\n').filter((item) => !!item)
+export const getLines = (data: string) => data.split('\n')
 
 type Directory<Name extends string> = `dir ${Name}`
 type File<Size extends string, Name extends string> = `${Size} ${Name}`
@@ -100,7 +99,7 @@ const changeDirectoryCommand = <Args>(
   if (isChangeDirectoryMoveInCommand(command)) {
     const [, , dir] = command.split(' ')
     return {
-      currentDir: tree.findDirectory(dir, ...currentDir.children),
+      currentDir: tree.findDirectoryChild(dir, ...currentDir.children),
     }
   }
 }
@@ -138,10 +137,13 @@ const createFileSystemTree = (lines: string[]) => {
 
 export const getPart1 = (lines: string[]) => {
   const tree = createFileSystemTree(lines)
-  return tree.sumDirectoriesUnder(100_000)
+  return tree.sumDirectorySizesUnder(100_000)
 }
 
-export const getPart2 = (lines: string[]) => {}
+export const getPart2 = (lines: string[]) => {
+  const tree = createFileSystemTree(lines)
+  return tree.findDirectorySizeForDeletion()
+}
 
 function main() {
   const lines = getLines(data)
