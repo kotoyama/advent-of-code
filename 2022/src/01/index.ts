@@ -5,7 +5,7 @@ import { readTextFile } from '../../lib'
 const data = readTextFile(__dirname + '/input.txt')
 
 export const getChunks = (data: string) =>
-  data.split('\n\n').map((chunk) => chunk.split('\n').map((str) => Number(str)))
+  data.split('\n\n').map((chunk) => chunk.split('\n').map(Number))
 
 const getSum = (chunk: number[]) => {
   return chunk.reduce((acc, curr) => acc + curr, 0)
