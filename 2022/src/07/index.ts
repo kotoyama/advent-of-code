@@ -83,8 +83,8 @@ const isChangeDirectoryMoveInCommand = <Args>(
 
 const changeDirectoryCommand = <Args>(
   command: ChangeDirectoryCommand<Args>,
-  tree: FileSystemTree | null,
-  currentDir: TreeNode<FileSystemNode> | null,
+  tree: Maybe<FileSystemTree>,
+  currentDir: Maybe<TreeNode<FileSystemNode>>,
 ) => {
   if (isChangeDirectorySwitchCommand(command)) {
     const root: DirectoryNode = { type: 'directory', name: '/', size: 0 }
@@ -105,8 +105,8 @@ const changeDirectoryCommand = <Args>(
 }
 
 const createFileSystemTree = (lines: string[]) => {
-  let tree: FileSystemTree | null = null
-  let currentDir: TreeNode<FileSystemNode> | null = null
+  let tree: Maybe<FileSystemTree> = null
+  let currentDir: Maybe<TreeNode<FileSystemNode>> = null
 
   for (const line of lines) {
     if (isCommand(line)) {

@@ -8,7 +8,7 @@ export interface ITree<T> {
 }
 
 export class Tree<T> implements ITree<T> {
-  protected _root: TreeNode<T> | null = null
+  protected _root: Maybe<TreeNode<T>> = null
 
   constructor(data: T) {
     this._root = new TreeNode<T>(data)

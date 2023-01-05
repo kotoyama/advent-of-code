@@ -11,10 +11,10 @@ export interface ITreeNode<T> {
 export class TreeNode<T> implements ITreeNode<T> {
   protected _id: string
   protected _data: T
-  protected _parent: TreeNode<T> | null = null
+  protected _parent: Maybe<TreeNode<T>> = null
   protected _children: TreeNode<T>[] = []
 
-  constructor(data: T, parent: TreeNode<T> | null = null) {
+  constructor(data: T, parent: Maybe<TreeNode<T>> = null) {
     this._id = nanoid()
     this._data = data
     this._parent = parent
