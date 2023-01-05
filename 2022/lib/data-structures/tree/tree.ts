@@ -6,6 +6,7 @@ export interface ITree<T> {
   root: Maybe<TreeNode<T>>
   addChild(value: T, parent: TreeNode<T>): Maybe<TreeNode<T>>
   findNodeById(id: string, startNode?: TreeNode<T>): Maybe<TreeNode<T>>
+  bfs(fn: (node: TreeNode<T>) => void, startNode?: TreeNode<T>): void
 }
 
 export class Tree<T> implements ITree<T> {
@@ -26,21 +27,29 @@ export class Tree<T> implements ITree<T> {
     }
   }
 
-  /**
-   * finds the node using a BFS approach
-   */
   findNodeById(id: string, startNode: TreeNode<T> = this.root) {
     if (!this.root) return null
+
+    let result: Maybe<TreeNode<T>> = null
+
+    this.bfs((node) => {
+      if (node && node.id === id) {
+        result = node
+      }
+    }, startNode)
+    return result
+  }
+
+  bfs(fn: (node: TreeNode<T>) => void, startNode: TreeNode<T> = this.root) {
+    if (!this.root) return
 
     const queue = new Queue<TreeNode<T>>()
     queue.enqueue(startNode)
 
     while (!queue.isEmpty) {
       const node = queue.dequeue()
-      if (node && node.id === id) return node
+      fn(node)
       node.children.forEach((child) => queue.enqueue(child))
     }
-
-    return null
   }
 }

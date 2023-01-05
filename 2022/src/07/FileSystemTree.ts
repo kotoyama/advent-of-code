@@ -42,6 +42,7 @@ export class FileSystemTree
 
   addFile(file: FileNode, parent: TreeNode<FileSystemNode>) {
     const parentNode = this.findNodeById(parent.id, parent)
+
     if (parentNode) {
       let currentNode: TreeNode<FileSystemNode> = parent
 
@@ -75,16 +76,11 @@ export class FileSystemTree
 
     let sum = 0
 
-    const queue = new Queue<TreeNode<FileSystemNode>>()
-    queue.enqueue(this.root)
-
-    while (!queue.isEmpty) {
-      const node = queue.dequeue()
+    this.bfs((node) => {
       if (node && node.data.type === 'directory' && node.data.size <= limit) {
         sum += node.data.size
       }
-      node.children.forEach((child) => queue.enqueue(child))
-    }
+    })
     return sum
   }
 
@@ -95,13 +91,9 @@ export class FileSystemTree
       DISK_SPACE_NEEDED_FOR_UPDATE -
       (TOTAL_DISK_SPACE_AVAILABLE - this.root.data.size)
 
-    const queue = new Queue<TreeNode<FileSystemNode>>()
-    queue.enqueue(this.root)
-
     let min = TOTAL_DISK_SPACE_AVAILABLE
 
-    while (!queue.isEmpty) {
-      const node = queue.dequeue()
+    this.bfs((node) => {
       if (
         node &&
         node.data.type === 'directory' &&
@@ -109,9 +101,7 @@ export class FileSystemTree
       ) {
         min = Math.min(node.data.size, min)
       }
-      node.children.forEach((child) => queue.enqueue(child))
-    }
-
+    })
     return min
   }
 }
