@@ -1,9 +1,11 @@
 import { nanoid } from 'nanoid'
 
+import { Maybe } from '../../../types'
+
 export interface ITreeNode<T> {
   id: string
   data: T
-  parent: TreeNode<T>
+  parent: Maybe<TreeNode<T>>
   children: TreeNode<T>[]
   addChild(node: TreeNode<T>): this
 }

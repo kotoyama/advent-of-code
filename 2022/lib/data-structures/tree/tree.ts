@@ -1,10 +1,11 @@
+import { Maybe } from '../../../types'
 import { Queue } from '../queue'
 import { TreeNode } from './tree-node'
 
 export interface ITree<T> {
-  root: TreeNode<T>
-  addChild(value: T, parent: TreeNode<T>): TreeNode<T>
-  findNodeById(expected: string, startNode?: TreeNode<T>): TreeNode<T>
+  root: Maybe<TreeNode<T>>
+  addChild(value: T, parent: TreeNode<T>): Maybe<TreeNode<T>>
+  findNodeById(id: string, startNode?: TreeNode<T>): Maybe<TreeNode<T>>
 }
 
 export class Tree<T> implements ITree<T> {

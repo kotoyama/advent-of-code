@@ -1,6 +1,7 @@
 import * as chalk from 'chalk'
 
 import { readTextFile, TreeNode } from '../../lib'
+import { Maybe } from '../../types'
 import {
   FileNode,
   DirectoryNode,

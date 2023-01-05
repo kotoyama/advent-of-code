@@ -1,4 +1,5 @@
 import { Queue, ITree, Tree, TreeNode } from '../../lib'
+import { Maybe } from '../../types'
 
 type BaseNode = {
   name: string
@@ -19,11 +20,11 @@ export interface IFileSystemTree extends ITree<FileSystemNode> {
   addFile(
     file: FileNode,
     parent: TreeNode<FileSystemNode>,
-  ): TreeNode<FileSystemNode>
+  ): Maybe<TreeNode<FileSystemNode>>
   findDirectoryChild(
     dir: string,
     ...children: TreeNode<FileSystemNode>[]
-  ): TreeNode<FileSystemNode>
+  ): Maybe<TreeNode<FileSystemNode>>
   sumDirectorySizesUnder(limit: number): number
   findDirectorySizeForDeletion(): number
 }
